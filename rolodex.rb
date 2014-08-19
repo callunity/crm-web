@@ -14,9 +14,10 @@ attr_accessor :contacts
     contact
   end
 
-  def search(number)
+  def search(contact_id)
     @contacts.select do |contact|
-      return contact if contact.id == number
+      return contact if contact.id == contact_id
+
     end
   end
 
