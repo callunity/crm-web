@@ -2,6 +2,6 @@
 
 <ul>
   <% @@rolodex.contacts.each do |contact| %>
-    <li><%= contact.first_name %> <%= contact.last_name %>
+    <li><%= contact.first_name %> <%= contact.last_name %><br><%= contact.email %><br><%= contact.notes %></li>
     <% end %>
 </ul>
