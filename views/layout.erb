@@ -1,23 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html>
   <head>
     <title><%= @crm_app_name %></title>
-    <link rel="stylesheet" type="text/css" href="/styles.css" >
+    <link rel="stylesheet" type="text/css" href="<%= url('styles.css') %>" />
   </head>
 
   <body>
     <header>
-      <p.element>Your power is almost directly proportional to the thickness of your Rolodex, and the time you spend maintaining it.</p>
+      <p class="edges">Your power is almost directly proportional to the thickness of your Rolodex, and the time you spend maintaining it.</p>
     </header>
     <div>
     <%= yield %>
   </div>
     <nav>
-      <p><a href="http://localhost:4567/">Home</a></p>
+      <p><a href="/">Home</a></p>  
     </nav>
     <footer>
-      <p.element>made by Heather Armstrong on August 19, 2014</p>
+      <p class="edges">made by Heather Armstrong on August 19, 2014</p>
     </footer>
   </body>
 </html>

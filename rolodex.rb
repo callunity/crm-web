@@ -14,117 +14,37 @@ attr_accessor :contacts
     contact
   end
 
-  def search(contact_id)
-    @contacts.select do |contact|
-      return contact if contact.id == contact_id
-
-    end
-  end
-
-  def search_all(attribute) ## next: regex
-    @contacts.select do |contact|
-      if contact.id == attribute 
-        puts contact
+  def search(attribute) ## next: regex
+    @contacts.each do |contact|
+      if contact.id == attribute
+        return contact
       elsif contact.first_name == attribute
-        puts contact
+        return contact
       elsif contact.last_name == attribute
-        puts contact
+        return contact
       elsif contact.email == attribute
-        puts contact
+        return contact
       elsif contact.notes == attribute
-        puts contact
+        return contact
       else puts "Attribute does not match any contacts."
       end
     end
+
   end
 
-  def display_info_by_attribute(attribute) ## still not working
-    case attribute
-    when 1
-      sorted = @contacts.sort_by do |contact|
-        contact.id.downcase
-      end
-      sorted.each do |contact|
-        puts contact.id
-      end
-    when 2
-      sorted = @contacts.sort_by do |contact|
-        contact.first_name.downcase
-      end
-      sorted.each do |contact|
-        puts contact.first_name
-      end
-    when 3
-      sorted = @contacts.sort_by do |contact|
-        contact.last_name.downcase
-      end
-      sorted.each do |contact|
-        puts contact.last_name
-      end
-    when 4
-      sorted = @contacts.sort_by do |contact|
-        contact.email.downcase
-      end
-      sorted.each do |contact|
-        puts contact.email
-      end
-    when 5
-      sorted = @contacts.sort_by do |contact|
-        contact.notes.downcase
-      end
-      sorted.each do |contact|
-        puts contact.notes
-      end
-    else
-      return
-    end
-  end
-
-  def modify_contact(contact)
-    contact_attr_to_modify = gets.chomp.to_i
-    puts ""
-    case contact_attr_to_modify
-    when 1
-      puts "Enter new first name"
-      new_first_name = gets.chomp
-      contact.first_name = new_first_name
-    when 2
-      puts "Enter new last name"
-      new_last_name = gets.chomp
-      contact.last_name = new_last_name
-    when 3
-      puts "Enter new email"
-      new_email = gets.chomp
-      contact.email = new_email
-    when 4
-      puts "Enter new note"
-      new_notes = gets.chomp
-      contact.notes = new_notes
-    when 5 
-      return
-    else puts "Sorry, that is not an option."
-    end
-  end
-
-  def display_particular_contact(contact_id)
-    @contacts.map do |contact|
-      puts contact if contact.id == contact_id
-    end
-  end
-
-  def display_all_contacts
-    @contacts.map do |contact|
-      puts contact
-      puts
-    end
-  end
+  # def search_v2(term)
+  #   results = []
+  #   @contacts.each do |c|
+  #     if anything_matches_at_all
+  #       results << c 
+  #     end
+  #   end
+  #   return results
+  # end
 
   def delete_contact(contact_id) 
     @contacts.each do |contact| 
-      if contact.id == contact_id
-        @contacts.delete(contact)
-      else 
-      end
+      @contacts.delete(contact) if contact.id == contact_id
     end
   end
 

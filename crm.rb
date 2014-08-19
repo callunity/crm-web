@@ -15,6 +15,7 @@ end
 
 # GET request to DISPLAY ALL contacts
 get '/contacts' do
+  @contacts = @@rolodex.contacts
   erb :contacts
 end
 
@@ -29,6 +30,16 @@ post '/contacts' do
   contact = Contact.new(params['first_name'], params['last_name'], params['email'], params['notes'])
   @@rolodex.add_contact(contact)
   redirect to('/contacts')
+end
+
+get '/contacts/search' do
+  erb :search_contacts
+end
+
+post '/contacts/search' do
+  puts params
+  @contacts = @@rolodex.search(params)
+  erb :contacts
 end
 
 # GET request to DISPLAY ONE contact [form for DELETE, link to EDIT]
@@ -77,5 +88,8 @@ delete '/contacts/:id' do
     raise Sinatra::NotFound
   end
 end
+
+
+
 
 
