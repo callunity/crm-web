@@ -120,13 +120,9 @@ attr_accessor :contacts
   end
 
   def delete_contact(contact_id) 
-    @contacts.map do |contact| 
-      if contact.id ==(contact_id.to_i) 
-        puts "Are you sure you wish to delete \n#{contact.to_s} \n(yes/no)"
-        confirm = gets.chomp
-        return unless confirm == "yes"
+    @contacts.each do |contact| 
+      if contact.id == contact_id
         @contacts.delete(contact)
-        puts "Deleted contact: \n#{contact.to_s}"
       else 
       end
     end
