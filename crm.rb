@@ -26,7 +26,35 @@ get '/contacts/new' do
   erb :new_contact
 end
 
-get '/contacts/1000' do
-  @contact = @@rolodex.search(1000)
-  erb :show_contact
+get '/contacts/:id' do
+  @contact = @@rolodex.search(params[:id].to_i)
+  if @contact
+    erb :show_contact
+  else
+    raise Sinatra::NotFound
+  end
 end
+
+put '/contacts/:id' do
+  @contact = @@rolodex.search(params[:id].to_i) ## use this code to refactor previous CRM iteration?
+  if @contact
+    @contact.first_name = params[:first_name]
+    @contact.last_name = params[:last_name]
+    @contact.email = params[:email]
+    @contact.notes = params[:notes]
+
+    redirect to('/contacts')
+  else 
+    raise Sinatra::NotFound
+  end
+end
+
+get '/contacts/:id/edit' do
+  @contact = @@rolodex.search(params[:id].to_i)
+  if @contact
+    erb :edit_contact
+  else
+    raise Sinatra::NotFound
+  end
+end
+
