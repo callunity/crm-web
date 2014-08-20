@@ -35,13 +35,13 @@ attr_accessor :contacts
   def search_all(params)
     results = []
     @contacts.each do |contact|
-      if contact.first_name.downcase == params["search_term"].downcase
+      if contact.first_name.downcase.include? params["search_term"].downcase
         results << contact
-      elsif contact.last_name.downcase == params["search_term"].downcase
+      elsif contact.last_name.downcase.include? params["search_term"].downcase
         results << contact
-      elsif contact.email.downcase == params["search_term"].downcase
+      elsif contact.email.downcase.include? params["search_term"].downcase
         results << contact
-      elsif contact.notes.downcase == params["search_term"].downcase
+      elsif contact.notes.downcase.include? params["search_term"].downcase
         results << contact
       else puts "Attribute does not match any contacts."
       end
