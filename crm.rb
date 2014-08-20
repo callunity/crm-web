@@ -48,7 +48,13 @@ end
 
 
 get '/contacts/search' do
-  erb :search_contacts
+  if params[:search_term]
+    @contacts = @@rolodex.search_all(params)
+    erb :contacts
+  else
+    erb :search_contacts
+  end
+  
 end
 
 post '/contacts/search' do

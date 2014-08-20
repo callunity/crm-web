@@ -14,17 +14,9 @@ attr_accessor :contacts
     contact
   end
 
-  def search(attribute) ## next: regex
+  def search(id) ## next: regex
     @contacts.each do |contact|
-      if contact.id == attribute
-        return contact
-      elsif contact.first_name == attribute
-        return contact
-      elsif contact.last_name == attribute
-        return contact
-      elsif contact.email == attribute
-        return contact
-      elsif contact.notes == attribute
+      if contact.id == id
         return contact
       else puts "Attribute does not match any contacts."
       end
@@ -32,21 +24,31 @@ attr_accessor :contacts
 
   end
 
-  def search_all(params)
+  def search_old(params)
+    search_term = params["search_term"].downcase
     results = []
     @contacts.each do |contact|
-      if contact.first_name.downcase.include? params["search_term"].downcase
+      if contact.first_name.downcase.include? search_term
         results << contact
-      elsif contact.last_name.downcase.include? params["search_term"].downcase
+      elsif contact.last_name.downcase.include? search_term
         results << contact
-      elsif contact.email.downcase.include? params["search_term"].downcase
+      elsif contact.email.downcase.include? search_term
         results << contact
-      elsif contact.notes.downcase.include? params["search_term"].downcase
+      elsif contact.notes.downcase.include? search_term
         results << contact
       else puts "Attribute does not match any contacts."
       end
     end
     return results
+  end
+
+  def search_all(params)
+    search_term = params["search_term"].downcase
+    @contacts.select do |contact|
+      [:first_name, :last_name, :email, :notes].each do |method|
+        contact.send(method).downcase.include? search_term
+      end
+    end
   end
 
   def delete_contact(contact_id) 
