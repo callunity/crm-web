@@ -32,15 +32,22 @@ attr_accessor :contacts
 
   end
 
-  # def search_v2(term)
-  #   results = []
-  #   @contacts.each do |c|
-  #     if anything_matches_at_all
-  #       results << c 
-  #     end
-  #   end
-  #   return results
-  # end
+  def search_all(params)
+    results = []
+    @contacts.each do |contact|
+      if contact.first_name.downcase == params["search_term"].downcase
+        results << contact
+      elsif contact.last_name.downcase == params["search_term"].downcase
+        results << contact
+      elsif contact.email.downcase == params["search_term"].downcase
+        results << contact
+      elsif contact.notes.downcase == params["search_term"].downcase
+        results << contact
+      else puts "Attribute does not match any contacts."
+      end
+    end
+    return results
+  end
 
   def delete_contact(contact_id) 
     @contacts.each do |contact| 

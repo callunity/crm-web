@@ -1,9 +1,20 @@
-require_relative 'contact'
 require_relative 'rolodex'
 require 'sinatra'
 require 'data_mapper'
 
 DataMapper.setup(:default, "sqlite3:database.sqlite3")
+
+class Contact
+  attr_accessor :id, :first_name, :last_name, :email, :notes
+
+  def initialize(first_name, last_name, email, notes)
+    @first_name = first_name
+    @last_name = last_name
+    @email = email
+    @notes = notes
+  end
+
+end
 
 @@rolodex = Rolodex.new
 
@@ -35,13 +46,14 @@ post '/contacts' do
   redirect to('/contacts')
 end
 
+
 get '/contacts/search' do
   erb :search_contacts
 end
 
 post '/contacts/search' do
   puts params
-  @contacts = @@rolodex.search(params)
+  @contacts = @@rolodex.search_all(params)
   erb :contacts
 end
 
