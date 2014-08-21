@@ -10,7 +10,7 @@ body {
 
 section {
   position: relative;
-  margin: 50px 20px 60px 20px;
+  margin: 80px 20px 60px 20px;
   padding: 0 0 30px 0;
 }
 
@@ -22,34 +22,46 @@ h1 {
 	color: #545454;
 }
 
+#notes-div {
+  float: left;
+}
+
+#post-notes {
+  clear: both;
+}
+
 header {
   position: absolute;
   top: 0;
   width: 100%;
   background-color: #2F4F4F;
+  color: #C0C0C0;
   margin: 0 0 0 -8px;
   padding: 0 0 0 3%;
   font-size: 0.8em;
-  color: #C0C0C0;
 }
 
 footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #545454;
-  margin: 0 0 0 0px;
-  padding: 0 0 0 0;
+  margin: 0 0 0 -8px;
+  padding: 0;
   font-size: 0.8em;
+  background-color: #C0C0C0;
 }
 
 nav {
   width: 100%;
   background-color: white;
-  margin: 0 0 0 -20px;
-  padding: 10px 0 0 0;
+  margin: 0;
+  padding: 10px 10px 10px 30px;
   font-weight: bold;
-  font-size: 1em; 
+  font-size: 1.5em; 
+}
+
+div.footnote {
+  padding: 0 0 0 3%;
 }
 
 nav > ul {
