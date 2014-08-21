@@ -3,7 +3,7 @@
 <p>
 <ul>
   <% @contacts.each do |contact| %>
-    <li><a href="/contacts/<%= contact.id.to_i %>"><%= contact.first_name %> <%= contact.last_name %></a><br><%= contact.email %><br><%= contact.notes %><br><br></li>
+    <li><a href="/contacts/<%= contact.id %>"><%= contact.first_name %> <%= contact.last_name %></a><br><%= contact.email %><br><%= contact.notes %><br><br></li>
     <% end %>
 </ul>
 </p>

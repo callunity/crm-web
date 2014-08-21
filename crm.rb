@@ -6,16 +6,16 @@ DataMapper.setup(:default, "sqlite3:database.sqlite3")
 
 class Contact
   include DataMapper::Resource
-  
-  attr_accessor :id, :first_name, :last_name, :email, :notes
 
-  def initialize(first_name, last_name, email, notes)
-    @first_name = first_name
-    @last_name = last_name
-    @email = email
-    @notes = notes
-  end
+  property :id, Serial
+  property :first_name, String
+  property :last_name, String
+  property :email, String
+  property :notes, String
 end
+
+DataMapper.finalize
+DataMapper.auto_upgrade!
 
 @@rolodex = Rolodex.new
 
@@ -30,7 +30,7 @@ end
 
 # GET request to DISPLAY ALL contacts
 get '/contacts' do
-  @contacts = @@rolodex.contacts
+  @contacts = Contact.all
   erb :contacts, :layout => :layout
 end
 
@@ -42,8 +42,12 @@ end
 # POST response for NEW CONTACT
 post '/contacts' do 
   puts params
-  contact = Contact.new(params['first_name'], params['last_name'], params['email'], params['notes'])
-  @@rolodex.add_contact(contact)
+  contact = Contact.create(
+    :first_name => params[:first_name],
+    :last_name => params[:last_name],
+    :email => params[:email],
+    :notes => params[:notes]
+    )
   redirect to('/contacts')
 end
 
@@ -66,7 +70,7 @@ end
 
 # GET request to DISPLAY ONE contact [form for DELETE, link to EDIT]
 get '/contacts/:id' do
-  @contact = @@rolodex.search(params[:id].to_i)
+  @contact = Contact.get(params[:id].to_i)
   if @contact
     erb :show_contact, :layout => :layout
   else
@@ -76,7 +80,7 @@ end
 
 # GET request to EDIT one contact 
 get '/contacts/:id/edit' do
-  @contact = @@rolodex.search(params[:id].to_i)
+  @contact = Contact.get(params[:id].to_i)
   if @contact
     erb :edit_contact, :layout => :layout
   else
