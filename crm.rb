@@ -1,4 +1,3 @@
-require_relative 'rolodex'
 require 'sinatra'
 require 'data_mapper'
 
@@ -16,8 +15,6 @@ end
 
 DataMapper.finalize
 DataMapper.auto_upgrade!
-
-@@rolodex = Rolodex.new
 
 
 # routes
@@ -53,19 +50,22 @@ end
 
 
 get '/contacts/search' do
-  if params[:search_term]                     ## why do it this way instead of as a post? What are the implications?
-    @contacts = @@rolodex.search_all(params)
+  puts params
+  results = []
+  if params[:search_term]
+    
+      contacts = Contact.all(:first_name => params[:search_term]) |
+      contacts = Contact.all(:last_name => params[:search_term]) |
+      contacts = Contact.all(:email => params[:search_term]) |
+      contacts = Contact.all(:notes => params[:search_term])
+      results << contacts if contacts
+    
+    @contacts = results.flatten.uniq
     erb :contacts, :layout => :layout
   else
     erb :search_contacts, :layout => :layout
   end
   
-end
-
-post '/contacts/search' do
-  puts params
-  @contacts = @@rolodex.search_all(params)
-  erb :contacts, :layout => :layout
 end
 
 # GET request to DISPLAY ONE contact [form for DELETE, link to EDIT]
@@ -90,12 +90,13 @@ end
 
 # PUT response to EDIT one contact
 put '/contacts/:id' do
-  @contact = @@rolodex.search(params[:id].to_i) ## use this code to refactor previous CRM iteration?
+  @contact = Contact.get(params[:id].to_i) ## use this code to refactor previous CRM iteration?
   if @contact
     @contact.first_name = params[:first_name]
     @contact.last_name = params[:last_name]
     @contact.email = params[:email]
     @contact.notes = params[:notes]
+    @contact.save
 
     redirect to('/contacts')
   else 
@@ -105,9 +106,9 @@ end
 
 # DELETE response for one contact
 delete '/contacts/:id' do
-  @contact = @@rolodex.search(params[:id].to_i)
+  @contact = Contact.get(params[:id].to_i)
   if @contact
-    @@rolodex.delete_contact(@contact.id)
+    @contact.destroy
 
     redirect to('/contacts')
   else
